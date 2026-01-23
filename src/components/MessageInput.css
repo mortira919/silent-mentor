@@ -1,0 +1,72 @@
+.message-input {
+    padding: 16px;
+    border-top: 1px solid var(--border-glass);
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.input-wrapper .input {
+    padding-right: 36px;
+    min-height: 44px;
+    max-height: 120px;
+}
+
+.btn-clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-clear:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+.input-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.mic-button {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    font-size: 18px;
+    transition: all 0.2s ease;
+}
+
+.mic-button:hover {
+    background: var(--bg-glass-hover);
+    border-color: var(--accent-primary);
+}
+
+.mic-button.listening {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: var(--error);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.btn-icon:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
