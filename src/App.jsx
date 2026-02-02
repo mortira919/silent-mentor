@@ -17,6 +17,7 @@ function App() {
   const [groqKey, setGroqKey] = useState('');
   const [showSettings, setShowSettings] = useState(false);
   const [audioMode, setAudioMode] = useState('system'); // 'mic' or 'system'
+  const [isPinned, setIsPinned] = useState(false);
 
   const micSpeech = useSpeechRecognition();
   const systemAudio = useSystemAudioCapture(groqKey);
@@ -24,6 +25,16 @@ function App() {
   // Active audio source based on mode
   const activeAudio = audioMode === 'system' ? systemAudio : micSpeech;
   const isListening = audioMode === 'system' ? systemAudio.isCapturing : micSpeech.isListening;
+
+  const isElectron = !!window.electronAPI;
+
+  const togglePin = async () => {
+    if (window.electronAPI) {
+      const newState = !isPinned;
+      await window.electronAPI.toggleAlwaysOnTop(newState);
+      setIsPinned(newState);
+    }
+  };
 
   // Load API keys from localStorage
   useEffect(() => {
@@ -90,13 +101,25 @@ function App() {
           <span className="header-icon">🎙️</span>
           <h1>Interview Assistant</h1>
         </div>
-        <button
-          className="btn btn-ghost btn-icon settings-btn"
-          onClick={() => setShowSettings(!showSettings)}
-          title="Настройки"
-        >
-          ⚙️
-        </button>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {isElectron && (
+            <button
+              className={`btn btn-ghost btn-icon ${isPinned ? 'active' : ''}`}
+              onClick={togglePin}
+              title={isPinned ? "Открепить" : "Закрепить поверх окон"}
+              style={{ color: isPinned ? 'var(--accent-primary)' : 'inherit' }}
+            >
+              {isPinned ? '📌' : '📍'}
+            </button>
+          )}
+          <button
+            className="btn btn-ghost btn-icon settings-btn"
+            onClick={() => setShowSettings(!showSettings)}
+            title="Настройки"
+          >
+            ⚙️
+          </button>
+        </div>
       </header>
 
       {/* Settings Panel */}
